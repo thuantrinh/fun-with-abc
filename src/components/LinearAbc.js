@@ -4,11 +4,11 @@ import { Button } from 'semantic-ui-react'
 import { inject, observer } from "mobx-react";
 
 @inject('store')
-@observer class RandomAlphabets extends React.Component {
+@observer class LinearAlphabets extends React.Component {
     constructor(props, context) {
         super(props, context);
-         this.generateNextHandler= this.generateNextHandler.bind(this);
-         this.getValidIndex= this.getValidIndex.bind(this);
+        this.generateNextHandler= this.generateNextHandler.bind(this);
+        this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
@@ -40,21 +40,13 @@ import { inject, observer } from "mobx-react";
 
     generateNextHandler(e) {
         e.preventDefault()
+        const newIndex = this.props.store.currentIndex + 1;
         const indes = this.props.store.indes;
-        if (indes.length <= 0) {
+        if (newIndex >= indes.length) {
             return;
         }
-        const randomFromAvailableIndecs = this.getRandomInt(0, indes.length - 1 );
-        const newIndex = indes[randomFromAvailableIndecs];
-        this.props.store.indes.splice(randomFromAvailableIndecs, 1);
         this.props.store.currentIndex = newIndex;
-        this.props.history.push(`/randomAlphabets/${newIndex}`);
-    }
-
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+        this.props.history.push(`/linearAlphabets/${newIndex}`);
     }
 
     getValidIndex(index) {
@@ -71,4 +63,4 @@ import { inject, observer } from "mobx-react";
     }
 }
 
-export default RandomAlphabets
+export default LinearAlphabets
