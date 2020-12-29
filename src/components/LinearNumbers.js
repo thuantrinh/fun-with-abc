@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react'
 import { inject, observer } from "mobx-react";
 
 @inject('store')
-@observer class LinearAlphabets extends React.Component {
+@observer class LinearNumbers extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.generateNextHandler= this.generateNextHandler.bind(this);
@@ -12,15 +12,17 @@ import { inject, observer } from "mobx-react";
     }
 
     render() {
-        const alphabetIndexParam = this.getValidIndex(this.props.match.params.index);
+        const indexParam = this.getValidIndex(this.props.match.params.index);
+        console.log(this.props.store);
+        console.log(indexParam);
         return (
             <React.Fragment>
                 <Container>
                     <Row>
                         <Col sm={2}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "100vw", textAlign: "center"}}>
-                            {this.props.store.alphabets[alphabetIndexParam]}
+                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "60vw", textAlign: "center"}}>
+                            {this.props.store.integers[indexParam]}
                         </Col>
                         <Col sm={2}>
                         </Col>
@@ -40,26 +42,30 @@ import { inject, observer } from "mobx-react";
 
     generateNextHandler(e) {
         e.preventDefault()
-        const newIndex = this.props.store.currentIndex + 1;
-        const indes = this.props.store.indes;
+        const newIndex = this.props.store.currentIntegerIndex + 1;
+        const indes = this.props.store.numberIndecs;
+        console.log(newIndex);
         if (newIndex >= indes.length) {
             return;
         }
-        this.props.store.currentIndex = newIndex;
-        this.props.history.push(`/linearAlphabets/${newIndex}`);
+        this.props.store.currentIntegerIndex = newIndex;
+        this.props.history.push(`/linearNumbers/${newIndex}`);
     }
 
     getValidIndex(index) {
         if (index === "start") {
-            this.props.store.resetAlphabetIndecs();
+            this.props.store.resetIntegerIndecs();
             return 0;
         }
         const parsedIndex = parseInt(index)
-        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.alphabets.length)) {
+        console.log(`index: ${parsedIndex}`);
+        console.log(`parsed index: ${parsedIndex}`);
+        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.integers.length)) {
             return index
         }
+        console.log('returning 0');
         return 0
     }
 }
 
-export default LinearAlphabets
+export default LinearNumbers

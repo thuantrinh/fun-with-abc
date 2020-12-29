@@ -2,6 +2,7 @@ import React from "react";
 import "../index.css"
 import RandomAlphabets from "./RandomAbc"
 import LinearAlphabets from "./LinearAbc"
+import LinearNumbers from "./LinearNumbers"
 import Home from "./Home"
 import About from "./About"
 import { BrowserRouter as Router, Route, Link, Switch, Redirect} from "react-router-dom";
@@ -23,10 +24,12 @@ export default function App() {
                         {/*<Route path="/"  component={Home} />*/}
                         <Route path="/about/"  component={About} />
                         <Route path="/" exact component={Home} />
-                        <Route path="/randomAlphabets/:alphabetIndex" exact component={RandomAlphabets} />
-                        <Route path="/linearAlphabets/:alphabetIndex" exact component={LinearAlphabets} />
-                        <Redirect from="/randomAlphabets" to="0"/>
-                        <Redirect from="/linearAlphabets" to="0"/>
+                        <Route path="/randomAlphabets/:index" exact component={RandomAlphabets} />
+                        <Route path="/linearAlphabets/:index" exact component={LinearAlphabets} />
+                        <Route path="/linearNumbers/:index" exact component={LinearNumbers} />
+                        <Redirect from="/randomAlphabets" to="start"/>
+                        <Redirect from="/linearAlphabets" to="start"/>
+                        <Redirect from="/linearNumbers" to="start"/>
                     </Switch>
                 </main>
             </Provider>

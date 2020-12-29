@@ -7,6 +7,7 @@ class Home extends React.Component {
         super(props);
         this.randomAlphabetsHandler = this.randomAlphabetsHandler.bind(this);
         this.linearAlphabetsHandler = this.linearAlphabetsHandler.bind(this);
+        this.linearNumbersHandler = this.linearNumbersHandler.bind(this);
         this.aboutHandler = this.aboutHandler.bind(this);
     }
 
@@ -36,6 +37,15 @@ class Home extends React.Component {
                         <Col sm={1}>
                         </Col>
                         <Col sm={10} style={{textAlign: "center", height: "100%", width: "100%", padding: "2vh"}}>
+                            <Button onClick={this.linearNumbersHandler} style={{fontSize: "10vw", width: "100%", height: "13vh"}}>NUMBERS</Button>
+                        </Col>
+                        <Col sm={1}>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={1}>
+                        </Col>
+                        <Col sm={10} style={{textAlign: "center", height: "100%", width: "100%", padding: "2vh"}}>
                             <Button onClick={this.aboutHandler} style={{fontSize: "10vw", width: "100%", height: "13vh"}}>ABOUT</Button>
                         </Col>
                         <Col sm={1}>
@@ -52,6 +62,10 @@ class Home extends React.Component {
 
     linearAlphabetsHandler() {
         this.props.history.push(`/linearAlphabets/start`);
+    }
+
+    linearNumbersHandler() {
+        this.props.history.push(`/linearNumbers/start`);
     }
 
     aboutHandler() {

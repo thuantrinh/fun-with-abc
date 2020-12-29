@@ -12,24 +12,25 @@ import { inject, observer } from "mobx-react";
     }
 
     render() {
-        const alphabetIndexParam = this.getValidIndex(this.props.match.params.alphabetIndex);
+        console.log(this.props.store);
+        const alphabetIndexParam = this.getValidIndex(this.props.match.params.index);
         return (
             <React.Fragment>
                 <Container>
                     <Row>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "100vw", textAlign: "center"}}>
+                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "100vw", textAlign: "center", verticalAlign: "middle"}}>
                             {this.props.store.alphabets[alphabetIndexParam]}
                         </Col>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
                     </Row>
                     <Row>
                         <Col sm={2}>
                         </Col>
                         <Col sm={8} style={{fontWeight: "700", textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontSize: "10vw", width: "100%", height: "13vh"}}>NEXT</Button>
+                            <Button onClick={this.generateNextHandler} style={{fontSize: "10vw", width: "100%", height: "13vh", paddingBottom: "5h"}}>NEXT</Button>
                         </Col>
                         <Col sm={2}>
                         </Col>
