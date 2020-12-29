@@ -24,12 +24,6 @@ export default function App() {
         </Router>
     );
 }
-// Home Page
-const Home = () => (
-    <React.Fragment>
-        <h1>Home</h1>
-    </React.Fragment>
-);
 // About Page
 const About = () => {
     return (
