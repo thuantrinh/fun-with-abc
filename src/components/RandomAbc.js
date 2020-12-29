@@ -20,7 +20,7 @@ import { inject, observer } from "mobx-react";
                     <Row>
                         <Col sm={1}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "100vw", textAlign: "center", verticalAlign: "middle"}}>
+                        <Col sm={8} style={{fontWeight: "700", height: "100%", fontSize: "100vw", textAlign: "center", verticalAlign: "middle"}}>
                             {this.props.store.alphabets[alphabetIndexParam]}
                         </Col>
                         <Col sm={1}>

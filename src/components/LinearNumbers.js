@@ -21,7 +21,7 @@ import { inject, observer } from "mobx-react";
                     <Row>
                         <Col sm={2}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "60vw", textAlign: "center"}}>
+                        <Col sm={8} style={{fontWeight: "700", height: "100%", fontSize: "60vw", textAlign: "center"}}>
                             {this.props.store.integers[indexParam]}
                         </Col>
                         <Col sm={2}>
