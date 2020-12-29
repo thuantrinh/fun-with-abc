@@ -51,8 +51,7 @@ import { inject, observer } from "mobx-react";
 
     getValidIndex(index) {
         if (index === "start") {
-            this.props.store.indecs = [...Array(this.props.store.alphabets.length).keys()];
-            this.props.store.currentIndex = 0
+            this.props.store.resetAlphabetIndecs();
             return 0;
         }
         const parsedIndex = parseInt(index)
