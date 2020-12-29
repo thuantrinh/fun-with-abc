@@ -19,7 +19,7 @@ import { inject, observer } from "mobx-react";
                     <Row>
                         <Col sm={2}>
                         </Col>
-                        <Col sm={8} style={{height: "80vh", fontSize: "100vw", textAlign: "center"}}>
+                        <Col sm={8} style={{fontWeight: "700", height: "80vh", fontSize: "100vw", textAlign: "center"}}>
                             {this.props.store.alphabets[alphabetIndexParam]}
                         </Col>
                         <Col sm={2}>
@@ -29,7 +29,7 @@ import { inject, observer } from "mobx-react";
                         <Col sm={2}>
                         </Col>
                         <Col sm={8} style={{textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontSize: "10vw", width: "100%", height: "13vh"}}>Next</Button>
+                            <Button onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "10vw", width: "100%", height: "13vh"}}>NEXT</Button>
                         </Col>
                         <Col sm={2}>
                         </Col>
