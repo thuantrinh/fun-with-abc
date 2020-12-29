@@ -1,21 +1,18 @@
 import React from "react";
 import { Container, Row, Col } from 'react-grid-system';
 import { Button } from 'semantic-ui-react'
+import { inject, observer } from "mobx-react";
 
-class RandomAlphabets extends React.Component {
-    alphabets = Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    state = {
-        alphabets: this.alphabets,
-        indes: [...Array(this.alphabets.length).keys()],
-        currentIndex: 0
-    }
-
-    constructor(props) {
-        super(props);
+@inject('store')
+@observer class RandomAlphabets extends React.Component {
+    constructor(props, context) {
+        super(props, context);
          this.generateNextHandler= this.generateNextHandler.bind(this);
+         this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
+        const alphabetIndexParam = this.getValidIndex(this.props.match.params.alphabetIndex);
         return (
             <React.Fragment>
                 <Container>
@@ -23,7 +20,7 @@ class RandomAlphabets extends React.Component {
                         <Col sm={2}>
                         </Col>
                         <Col sm={8} style={{height: "80vh", fontSize: "100vw", textAlign: "center"}}>
-                            {this.state.alphabets[this.state.currentIndex]}
+                            {this.props.store.alphabets[alphabetIndexParam]}
                         </Col>
                         <Col sm={2}>
                         </Col>
@@ -43,21 +40,29 @@ class RandomAlphabets extends React.Component {
 
     generateNextHandler(e) {
         e.preventDefault()
-        if (this.state.indes.length <= 0) {
+        const indes = this.props.store.indes;
+        if (indes.length <= 0) {
             return;
         }
-        const randomFromIndecs = this.getRandomInt(0, this.state.indes.length - 1);
-        const newIndex = this.state.indes[randomFromIndecs]
-        this.state.indes.splice(randomFromIndecs, 1)
-        this.setState({
-            currentIndex: newIndex
-        })
+        const randomFromAvailableIndecs = this.getRandomInt(0, indes.length - 1 );
+        const newIndex = indes[randomFromAvailableIndecs];
+        this.props.store.indes.splice(randomFromAvailableIndecs, 1);
+        this.props.store.currentIndex = newIndex;
+        this.props.history.push(`/randomAlphabets/${newIndex}`);
     }
 
     getRandomInt(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    getValidIndex(index) {
+        const parsedIndex = parseInt(index)
+        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.alphabets.length)) {
+            return index
+        }
+        return 0
     }
 }
 
