@@ -16,12 +16,10 @@ export default function App() {
                 <main>
                     <nav>
                         <ul>
-                            {/*<li><Link to="/">Home</Link></li>*/}
                             <li><Link to={`/`}>Home</Link></li>
                         </ul>
                     </nav>
                     <Switch>
-                        {/*<Route path="/"  component={Home} />*/}
                         <Route path="/about/"  component={About} />
                         <Route path="/" exact component={Home} />
                         <Route path="/randomAlphabets/:index" exact component={RandomAlphabets} />
@@ -33,7 +31,6 @@ export default function App() {
                     </Switch>
                 </main>
             </Provider>
-
         </Router>
     );
 }

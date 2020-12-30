@@ -8,11 +8,12 @@ import { inject, observer } from "mobx-react";
     constructor(props, context) {
         super(props, context);
          this.generateNextHandler= this.generateNextHandler.bind(this);
+         this.getNewIndex= this.getNewIndex.bind(this);
          this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
-        console.log(this.props.store);
+        console.log(this.props.store.indes);
         const alphabetIndexParam = this.getValidIndex(this.props.match.params.index);
         return (
             <React.Fragment>
@@ -42,15 +43,10 @@ import { inject, observer } from "mobx-react";
     generateNextHandler(e) {
         e.preventDefault()
         const indes = this.props.store.indes;
-        console.log(indes);
-        console.log(this.props.store.indes);
         if (indes.length <= 0) {
             return;
         }
-        const randomFromAvailableIndecs = this.getRandomInt(0, indes.length - 1 );
-        const newIndex = indes[randomFromAvailableIndecs];
-        this.props.store.indes.splice(randomFromAvailableIndecs, 1);
-        this.props.store.currentIndex = newIndex;
+        const newIndex = this.getNewIndex()
         this.props.history.push(`/randomAlphabets/${newIndex}`);
     }
 
@@ -60,10 +56,23 @@ import { inject, observer } from "mobx-react";
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    getNewIndex() {
+        const indes = this.props.store.indes;
+        if (indes.length <= 0) {
+            return;
+        }
+        const randomFromAvailableIndecs = this.getRandomInt(0, indes.length - 1 );
+        const newIndex = indes[randomFromAvailableIndecs];
+        this.props.store.indes.splice(randomFromAvailableIndecs, 1);
+        this.props.store.currentIndex = newIndex;
+        return newIndex;
+    }
+
     getValidIndex(index) {
         if (index === "start") {
             this.props.store.resetAlphabetIndecs();
-            return 0;
+            const newIndex = this.getNewIndex();
+            return newIndex;
         }
         const parsedIndex = parseInt(index)
         if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.alphabets.length)) {
