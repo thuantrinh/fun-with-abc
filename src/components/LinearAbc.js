@@ -8,11 +8,13 @@ import { inject, observer } from "mobx-react";
     constructor(props, context) {
         super(props, context);
         this.generateNextHandler= this.generateNextHandler.bind(this);
+        this.generatePreviousHandler= this.generatePreviousHandler.bind(this);
         this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
-        const alphabetIndexParam = this.getValidIndex(this.props.match.params.index);
+        const originalIndexParam = this.props.match.params.index;
+        const alphabetIndexParam = this.getValidIndex(originalIndexParam);
         return (
             <React.Fragment>
                 <Container>
@@ -26,12 +28,15 @@ import { inject, observer } from "mobx-react";
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
-                        <Col sm={8} style={{textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "10vw", width: "100%", height: "13vh"}}>NEXT</Button>
+                        <Col style={{textAlign: "center", height: "10vh"}}>
+                            <Button disabled={originalIndexParam==="start" || alphabetIndexParam === 0} onClick={this.generatePreviousHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>PREVIOUS</Button>
                         </Col>
-                        <Col sm={2}>
+                        <Col style={{textAlign: "center", height: "10vh"}}>
+                            <Button onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>NEXT</Button>
+                        </Col>
+                        <Col sm={1}>
                         </Col>
                     </Row>
                 </Container>
@@ -40,7 +45,18 @@ import { inject, observer } from "mobx-react";
 
     generateNextHandler(e) {
         e.preventDefault()
-        const newIndex = this.props.store.currentIndex + 1;
+        const newIndex = ++this.props.store.currentIndex;
+        const indes = this.props.store.indes;
+        if (newIndex >= indes.length) {
+            return;
+        }
+        this.props.store.currentIndex = newIndex;
+        this.props.history.push(`/linearAlphabets/${newIndex}`);
+    }
+
+    generatePreviousHandler(e) {
+        e.preventDefault()
+        const newIndex = --this.props.store.currentIndex;
         const indes = this.props.store.indes;
         if (newIndex >= indes.length) {
             return;
