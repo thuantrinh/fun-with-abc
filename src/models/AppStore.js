@@ -1,6 +1,5 @@
 import { observable } from "mobx";
 const alphabets = Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-const minInt = 0;
 const maxInt = 20;
 const integers = [...Array(maxInt + 1).keys()];
 export class AppStore {

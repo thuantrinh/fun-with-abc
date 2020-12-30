@@ -8,32 +8,34 @@ import { inject, observer } from "mobx-react";
     constructor(props, context) {
         super(props, context);
         this.generateNextHandler= this.generateNextHandler.bind(this);
+        this.generatePreviousHandler= this.generatePreviousHandler.bind(this);
         this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
         const indexParam = this.getValidIndex(this.props.match.params.index);
-        console.log(this.props.store);
-        console.log(indexParam);
         return (
             <React.Fragment>
-                <Container>
+                <Container fluid>
                     <Row>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", height: "100%", fontSize: "60vw", textAlign: "center"}}>
-                            {this.props.store.integers[indexParam]}
+                        <Col sm={10} style={{fontWeight: "700", height: "100%", fontSize: "60vw", textAlign: "center"}}>
+                            {indexParam}
                         </Col>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={2}>
+                        <Col>
                         </Col>
-                        <Col sm={8} style={{textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "10vw", width: "100%", height: "13vh"}}>NEXT</Button>
+                        <Col style={{height: "10vh"}}>
+                            <Button onClick={this.generatePreviousHandler} style={{fontWeight: "600", fontSize: "6vw", width: "37vw", height: "13vh"}}>PREVIOUS</Button>
                         </Col>
-                        <Col sm={2}>
+                        <Col style={{height: "10vh"}}>
+                            <Button onClick={this.generateNextHandler} style={{fontWeight: "600", fontSize: "6vw", width: "37vw", height: "13vh"}}>NEXT</Button>
+                        </Col>
+                        <Col >
                         </Col>
                     </Row>
                 </Container>
@@ -42,12 +44,17 @@ import { inject, observer } from "mobx-react";
 
     generateNextHandler(e) {
         e.preventDefault()
-        const newIndex = this.props.store.currentIntegerIndex + 1;
-        const indes = this.props.store.numberIndecs;
-        console.log(newIndex);
-        if (newIndex >= indes.length) {
+        const newIndex = ++this.props.store.currentIntegerIndex;
+        this.props.store.currentIntegerIndex = newIndex;
+        this.props.history.push(`/linearNumbers/${newIndex}`);
+    }
+
+    generatePreviousHandler(e) {
+        e.preventDefault()
+        if (this.props.store.currentIntegerIndex === 0) {
             return;
         }
+        const newIndex = --this.props.store.currentIntegerIndex;
         this.props.store.currentIntegerIndex = newIndex;
         this.props.history.push(`/linearNumbers/${newIndex}`);
     }
@@ -58,12 +65,10 @@ import { inject, observer } from "mobx-react";
             return 0;
         }
         const parsedIndex = parseInt(index)
-        console.log(`index: ${parsedIndex}`);
-        console.log(`parsed index: ${parsedIndex}`);
-        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.integers.length)) {
-            return index
+        if (Number.isInteger(parsedIndex)) {
+            this.props.store.currentIntegerIndex = parsedIndex;
+            return parsedIndex
         }
-        console.log('returning 0');
         return 0
     }
 }

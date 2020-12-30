@@ -65,7 +65,7 @@ class Home extends React.Component {
     }
 
     linearNumbersHandler() {
-        this.props.history.push(`/linearNumbers/start`);
+        this.props.history.push(`/linearNumbers/0`);
     }
 
     aboutHandler() {

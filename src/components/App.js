@@ -29,7 +29,7 @@ export default function App() {
                         <Route path="/linearNumbers/:index" exact component={LinearNumbers} />
                         <Redirect from="/randomAlphabets" to="start"/>
                         <Redirect from="/linearAlphabets" to="start"/>
-                        <Redirect from="/linearNumbers" to="start"/>
+                        <Redirect from="/linearNumbers" to="0"/>
                     </Switch>
                 </main>
             </Provider>
