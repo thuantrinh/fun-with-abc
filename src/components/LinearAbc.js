@@ -72,7 +72,7 @@ import { inject, observer } from "mobx-react";
         }
         const parsedIndex = parseInt(index)
         if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.alphabets.length)) {
-            return index
+            return parsedIndex
         }
         return 0
     }

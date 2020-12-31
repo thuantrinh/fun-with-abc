@@ -13,6 +13,7 @@ import { inject, observer } from "mobx-react";
     }
 
     render() {
+        const originalIndexParam = this.props.match.params.index;
         const indexParam = this.getValidIndex(this.props.match.params.index);
         return (
             <React.Fragment>
@@ -30,7 +31,7 @@ import { inject, observer } from "mobx-react";
                         <Col sm={1}>
                         </Col>
                         <Col style={{height: "10vh"}}>
-                            <Button onClick={this.generatePreviousHandler} style={{fontWeight: "600", fontSize: "6vw", width: "37vw", height: "13vh"}}>PREVIOUS</Button>
+                            <Button disabled={originalIndexParam==="start" || indexParam === 0} onClick={this.generatePreviousHandler} style={{fontWeight: "600", fontSize: "6vw", width: "37vw", height: "13vh"}}>PREVIOUS</Button>
                         </Col>
                         <Col style={{height: "10vh"}}>
                             <Button onClick={this.generateNextHandler} style={{fontWeight: "600", fontSize: "6vw", width: "37vw", height: "13vh"}}>NEXT</Button>
