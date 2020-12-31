@@ -8,12 +8,11 @@ import { inject, observer } from "mobx-react";
     constructor(props, context) {
         super(props, context);
          this.generateNextHandler= this.generateNextHandler.bind(this);
-         this.getNewIndex= this.getNewIndex.bind(this);
+         this.generatePreviousHandler= this.generatePreviousHandler.bind(this);
          this.getValidIndex= this.getValidIndex.bind(this);
     }
 
     render() {
-        console.log(this.props.store.indes);
         const alphabetIndexParam = this.getValidIndex(this.props.match.params.index);
         return (
             <React.Fragment>
@@ -22,18 +21,21 @@ import { inject, observer } from "mobx-react";
                         <Col sm={1}>
                         </Col>
                         <Col sm={8} style={{fontWeight: "700", height: "100%", fontSize: "100vw", textAlign: "center", verticalAlign: "middle"}}>
-                            {this.props.store.alphabets[alphabetIndexParam]}
+                            {this.props.store.shuffledAlphabets[alphabetIndexParam]}
                         </Col>
                         <Col sm={1}>
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={2}>
+                        <Col sm={1}>
                         </Col>
-                        <Col sm={8} style={{fontWeight: "700", textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontSize: "10vw", width: "100%", height: "13vh", paddingBottom: "5h"}}>NEXT</Button>
+                        <Col style={{textAlign: "center", height: "10vh"}}>
+                            <Button disabled={alphabetIndexParam==="start" || alphabetIndexParam === 0} onClick={this.generatePreviousHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>PREVIOUS</Button>
                         </Col>
-                        <Col sm={2}>
+                        <Col style={{textAlign: "center", height: "10vh"}}>
+                            <Button disabled={alphabetIndexParam === this.props.store.shuffledAlphabets.length - 1} onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>NEXT</Button>
+                        </Col>
+                        <Col sm={1}>
                         </Col>
                     </Row>
                 </Container>
@@ -42,41 +44,34 @@ import { inject, observer } from "mobx-react";
 
     generateNextHandler(e) {
         e.preventDefault()
-        const indes = this.props.store.indes;
-        if (indes.length <= 0) {
+        const newIndex = ++this.props.store.currentIndex;
+        const alphabets = this.props.store.shuffledAlphabets;
+        if (newIndex >= alphabets.length) {
             return;
         }
-        const newIndex = this.getNewIndex()
+        this.props.store.currentIndex = newIndex;
         this.props.history.push(`/randomAlphabets/${newIndex}`);
     }
 
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    getNewIndex() {
-        const indes = this.props.store.indes;
-        if (indes.length <= 0) {
+    generatePreviousHandler(e) {
+        e.preventDefault()
+        const newIndex = --this.props.store.currentIndex;
+        const alphabets = this.props.store.shuffledAlphabets;
+        if (newIndex >= alphabets.length) {
             return;
         }
-        const randomFromAvailableIndecs = this.getRandomInt(0, indes.length - 1 );
-        const newIndex = indes[randomFromAvailableIndecs];
-        this.props.store.indes.splice(randomFromAvailableIndecs, 1);
         this.props.store.currentIndex = newIndex;
-        return newIndex;
+        this.props.history.push(`/randomAlphabets/${newIndex}`);
     }
 
     getValidIndex(index) {
         if (index === "start") {
-            this.props.store.resetAlphabetIndecs();
-            const newIndex = this.getNewIndex();
-            return newIndex;
+            this.props.store.resetAlphabetIndecs(false);
+            return 0;
         }
         const parsedIndex = parseInt(index)
-        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.alphabets.length)) {
-            return index
+        if (Number.isInteger(parsedIndex) && (parsedIndex >= 0 && parsedIndex <= this.props.store.shuffledAlphabets.length)) {
+            return parsedIndex
         }
         return 0
     }

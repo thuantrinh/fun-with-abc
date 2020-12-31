@@ -1,9 +1,11 @@
 import { observable } from "mobx";
+import shuffle from 'shuffle-array'
 const alphabets = Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 const maxInt = 20;
 const integers = [...Array(maxInt + 1).keys()];
 export class AppStore {
     @observable alphabets = alphabets;
+    @observable shuffledAlphabets = shuffle(alphabets, {'copy': true});
     @observable indes = [...Array(alphabets.length).keys()];
     @observable currentIndex = 0;
     @observable integers = integers;
@@ -12,9 +14,11 @@ export class AppStore {
     @observable minInt = 0;
     @observable maxInt = 20;
 
-    resetAlphabetIndecs() {
-        this.indes = [...Array(alphabets.length).keys()]
-        this.currentIndex = 0
+    resetAlphabetIndecs(reshuffle) {
+        if (reshuffle === true) {
+            this.shuffledAlphabets = shuffle(alphabets, {'copy': true});
+        }
+        this.currentIndex = 0;
     }
 
     resetIntegerIndecs() {

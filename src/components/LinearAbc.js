@@ -34,7 +34,7 @@ import { inject, observer } from "mobx-react";
                             <Button disabled={originalIndexParam==="start" || alphabetIndexParam === 0} onClick={this.generatePreviousHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>PREVIOUS</Button>
                         </Col>
                         <Col style={{textAlign: "center", height: "10vh"}}>
-                            <Button onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>NEXT</Button>
+                            <Button disabled={alphabetIndexParam === this.props.store.alphabets.length - 1} onClick={this.generateNextHandler} style={{fontWeight: "700", fontSize: "6vw", width: "35vw", height: "13vh"}}>NEXT</Button>
                         </Col>
                         <Col sm={1}>
                         </Col>
